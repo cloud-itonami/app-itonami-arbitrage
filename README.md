@@ -1,12 +1,14 @@
 # ao-arbitrage
 
-`cloud-itonami/ao-arbitrage` (renamed from `arbitrage` on 2026-09-24) —
+`network-awai/app-itonami-arbitrage` (was `cloud-itonami/ao-arbitrage`, and
+before 2026-09-24 `cloud-itonami/arbitrage`; GitHub redirects both) —
 **educational cross-asset arbitrage *signal* feed, and the resident bot that
 measures and proposes it.** It proposes, posts, and mentions. **It never executes.**
 
-The subject and the bot are one repository. The Hermes profile that acts for
-it — `awai-arb` — lives in [`hermes/`](hermes/README.md) and is materialized
-onto the host from there.
+The subject and the bot are one repository. The profile that acts for it —
+`awai-arb` — lives in [`hermes/`](hermes/README.md). Since 2026-11-18
+(AWAI-3213) it is an **itonami agent profile** (it has `itonami.edn` and
+`yakuwari.edn`), because it uses the murakumo rail; see that README.
 
 The name says what the subject is, not what the code does. What the code
 actually is today is small and worth stating plainly: **one Cloudflare Worker
@@ -16,7 +18,7 @@ else and arrives over XRPC.
 
 | | |
 |---|---|
-| repo | `cloud-itonami/ao-arbitrage` (west path `orgs/cloud-itonami/ao-arbitrage`) |
+| repo | `network-awai/app-itonami-arbitrage` (west path still `orgs/cloud-itonami/ao-arbitrage` until the manifest is updated) |
 | origin | extracted from `etzhayyim/root` at `60-apps/etzhayyim-project-arbitrage` |
 | runtime | Cloudflare Worker (static assets from a ClojureScript/reagent/re-frame build — migrated from SvelteKit 2026-08-26, see below) |
 | declared hosts | `arb.etzhayyim.com`, `arb2x301.etzhayyim.com` |
@@ -180,9 +182,10 @@ has (kept for history, flagged inline).
 ## Naming
 
 `ao-` is the role prefix for a repository that is an artificial organism — a
-resident bot (kotoba-lang/ao model) whose subject, code and Hermes profile
-live together. Identity is the path `cloud-itonami/ao-arbitrage`; GitHub
-redirects the old `cloud-itonami/arbitrage`.
+resident bot (kotoba-lang/ao model) whose subject, code and agent profile
+live together. The repository has since been transferred and renamed: its
+identity is now the path `network-awai/app-itonami-arbitrage`, and GitHub
+redirects `cloud-itonami/ao-arbitrage` and `cloud-itonami/arbitrage`.
 
 Note that `README.edn` still records the pre-extraction destination
 `etzhayyim/com-etzhayyim-app-arbitrage`, and every DID, host, and namespace in
