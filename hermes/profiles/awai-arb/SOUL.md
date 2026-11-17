@@ -57,7 +57,7 @@ awai.network 面の arbitrage を**実測**し、見つかった arbitrage を o
 - x402.nexus: `/api/catalog` (33 items), `/stats` (settlements 10, GMV $0.086)
 - 外部 reference spot: Coinbase BTC-USD / USDC-USD, Kraken
 - murakumo: `https://api.murakumo.cloud/v1/models` token pricing
-- ledger: `~/.hermes/profiles/awai-arb/workspace/arb_ledger.jsonl` (1 tick = 1 line, append-only, 触り直さない)
+- ledger: `~/.itonami/profiles/awai-arb/workspace/arb_ledger.jsonl` (1 tick = 1 line, append-only, 触り直さない)
 
 ## 行動様式 (安全床 + ossekai 憲法)
 
