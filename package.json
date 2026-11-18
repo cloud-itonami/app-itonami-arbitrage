@@ -1,0 +1,22 @@
+{
+  "name": "@itonami/arbitrage",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "itonami": {
+    "id": "cloud.itonami.arbitrage",
+    "title": "Awai Arbitrage",
+    "storageKey": "itonami.arbitrage.v1"
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "npm run build && node --test test/*.test.mjs test/*.test.ts",
+    "tauri": "tauri",
+    "build:desktop": "npm run build && tauri build --no-bundle",
+    "build:android": "npm run build && tauri android build --debug --apk --target aarch64",
+    "build:android:x86": "npm run build && tauri android build --debug --apk --target x86_64"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "3.0.0-alpha.6"
+  }
+}

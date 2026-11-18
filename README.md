@@ -105,10 +105,56 @@ Deciding which (if either) of `worker/src/app.ts` / `worker/src/xrpc-proxy.ts` i
 authoritative going forward is a design change, not a documentation change,
 so this README only records that a decision is outstanding.
 
+## Awai app (Tauri v3, since 2026-11-18)
+
+`Awai Arbitrage` (`cloud.itonami.arbitrage`) is the user-side app for the
+proposals `awai-arb` drafts (AWAI-3207; this unit AWAI-3383). It follows the
+app-itonami-* Tauri v3 template (AWAI-3079) and the shared Kotoba end-user app
+contract: everything runs on the device, the origin would only serve static files.
+
+- **Source:** the user picks a proposal file on the device (the bot's
+  `pending_proposals_<date>.json`, `{status, proposals:[{id, kind, evidence,
+  proposal}]}`). `src/domain/feed.ts` applies the same rule as `arb_post.py`
+  (`arb-` id, one of information / goods / procedural / social, non-empty
+  evidence and proposal) and lists every rejected item with its reason.
+- **No network:** `descriptor.json` declares `operations: []`; the CSP allows
+  only `self` and Tauri IPC; the Android manifest asks for no permission (no
+  `INTERNET`). The public feed and its consented GET operation come with
+  AWAI-3207 child 2.
+- **Local only:** the imported feed and the kind / text filter stay in
+  `localStorage` on the device ("端末の保存内容を消す" removes them).
+- **Host:** Tauri 3.0.0-alpha.6 with one read-only command (`awai_host_info`),
+  no fs / shell / http plugin. `kotoba-client-runtime` is vendored and pinned
+  (`vendor/PINS.json`, checked at build; equal to `kotoba-lang/kotoba` at the
+  pinned revision).
+- **Propose-only:** the page says the proposals are not trading instructions or
+  investment advice; the app never trades, sends money or posts.
+
+```sh
+npm install
+npm test                    # build + domain, state and local-only checks
+(cd src-tauri && cargo check)
+npm run build:android       # arm64 debug APK (ANDROID_HOME, NDK_HOME 27.0.12077973, JAVA_HOME 21)
+npm run build:android:x86   # x86_64 debug APK (emulator)
+```
+
+Verified 2026-11-18 (macOS, Node 26, Rust 1.99): `npm test` 15/15,
+`cargo check`, arm64 debug APK built (`aapt`: no Android permission), page
+checked in a browser at 375 px (import, reject list, kind filter, reload).
+
+**Not verified / not done:** launching the app on a device or emulator,
+`tauri build` desktop binary, the file picker inside the Android WebView,
+signed release, Itonami Store, the public feed (child 2), the disparity
+filter and Figma-first UI (child 4), revenue (child 5). The debug APK is a
+test artifact, not a release.
+
 ## Repository layout
 
 ```
 itonami/profiles/         resident itonami agent profile(s) — source of truth, see its README
+package.json, scripts/    Awai Arbitrage app: static build (dist/) — see "Awai app" above
+src/, test/, vendor/      app domain core, UI, tests, pinned kotoba-client-runtime
+src-tauri/                Tauri v3 host; gen/android is the generated Android project
 PROJECT.jsonld            project identity + the 10 declared actor DIDs
 README.edn                extraction record (machine-readable, superseded as an entry point by this file)
 migration.edn             what was extracted from etzhayyim/root, with a checkable byte count (historical — see below)
