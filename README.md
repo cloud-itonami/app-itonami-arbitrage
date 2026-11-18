@@ -6,9 +6,11 @@ before 2026-09-24 `cloud-itonami/arbitrage`; GitHub redirects both) —
 measures and proposes it.** It proposes, posts, and mentions. **It never executes.**
 
 The subject and the bot are one repository. The profile that acts for it —
-`awai-arb` — lives in [`hermes/`](hermes/README.md). Since 2026-11-18
-(AWAI-3213) it is an **itonami agent profile** (it has `itonami.edn` and
-`yakuwari.edn`), because it uses the murakumo rail; see that README.
+`awai-arb` — lives in [`itonami/profiles/`](itonami/profiles/README.md). It
+is an **itonami agent profile** (it has `itonami.edn` and `yakuwari.edn`),
+because it uses the murakumo rail: converted 2026-11-18 (AWAI-3213) and moved
+out of `hermes/profiles/` the same day (AWAI-3311, ADR-2610222100); see that
+README.
 
 The name says what the subject is, not what the code does. What the code
 actually is today is small and worth stating plainly: **one Cloudflare Worker
@@ -106,7 +108,7 @@ so this README only records that a decision is outstanding.
 ## Repository layout
 
 ```
-hermes/                   resident bot profile(s) — source of truth, see hermes/README.md
+itonami/profiles/         resident itonami agent profile(s) — source of truth, see its README
 PROJECT.jsonld            project identity + the 10 declared actor DIDs
 README.edn                extraction record (machine-readable, superseded as an entry point by this file)
 migration.edn             what was extracted from etzhayyim/root, with a checkable byte count (historical — see below)
