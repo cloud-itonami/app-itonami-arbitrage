@@ -1,13 +1,12 @@
 ;; itonami profile (cloud.itonami.profile.v2). This profile is an itonami agent only
 ;; (ADR-2610222100 §2-3): it lives in itonami/profiles/, not hermes/profiles/, and is
 ;; not materialized into ~/.hermes. The Hermes-shaped files (SOUL, config, cron) are the
-;; layout itonami-agent reads; :profile/hermes-compatible is its schema flag (AWAI-3311).
+;; layout itonami-agent reads (AWAI-3311). The retired :profile/hermes-compatible flag is gone (AWAI-3334).
 ;; Owner decision 2026-11-18 (AWAI-3213): awai-arb runs on the itonami agent CLI,
 ;; because it uses the murakumo rail (Two CLIs, kotoba-lang/itonami-agent AGENTS.md).
 {:itonami/schema "cloud.itonami.profile.v2"
  :profile/id "awai-arb"
  :profile/description "awai.network arbitrage measurement bot: torihiki/x402/murakumo price surfaces, cross-market gap vs external refs, paper PnL, propose-only"
- :profile/hermes-compatible true
  :agent/kind :role-bot
  :org/world :awai :org/path [:etzhayyim :awai :cloud-itonami]
  :org/github "network-awai" :org/unit :cloud-itonami :awai/business :awai-network
