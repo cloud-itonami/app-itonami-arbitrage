@@ -3,3 +3,9 @@
 node_modules/
 .svelte-kit/
 .wrangler/
+
+# Tauri v3 app (AWAI-3383): build output and generated files.
+/node_modules/
+/dist/
+/src-tauri/target/
+/src-tauri/gen/schemas/
