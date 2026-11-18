@@ -142,8 +142,12 @@ Verified 2026-11-18 (macOS, Node 26, Rust 1.99): `npm test` 15/15,
 `cargo check`, arm64 debug APK built (`aapt`: no Android permission), page
 checked in a browser at 375 px (import, reject list, kind filter, reload).
 
-**Not verified / not done:** launching the app on a device or emulator,
-`tauri build` desktop binary, the file picker inside the Android WebView,
+On an AOSP API 35 emulator (2026-11-18, AWAI-3398): cold launch, the
+WebView file picker, the kind filter, state after a restart, and no socket
+or traffic for the app uid all pass; see
+[docs/android-emulator-20261118.md](docs/android-emulator-20261118.md).
+
+**Not verified / not done:** a real device, `tauri build` desktop binary,
 signed release, Itonami Store, the public feed (child 2), the disparity
 filter and Figma-first UI (child 4), revenue (child 5). The debug APK is a
 test artifact, not a release.
