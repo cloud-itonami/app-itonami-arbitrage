@@ -115,13 +115,15 @@ function rejectedPanel(feed) {
 function render() {
   const view = document.getElementById("view");
   const feed = state.value.feed;
-  view.replaceChildren(
+  // replaceChildren turns null into the text "null", so drop absent parts first.
+  view.replaceChildren(...[
     el("section", { class: "card warn", "aria-label": "注意" },
       el("p", {}, "ここにあるのは bot が測った価格差・情報格差の提案で、売買の指示や投資助言ではありません。この app は取引・送金・投稿をしません。")),
     sourcePanel(),
     feed ? filterPanel(feed) : el("section", { class: "card" }, el("p", {}, "まだ提案がありません。上のボタンから提案ファイルを選んでください。")),
     feed ? el("section", { id: "list", "aria-live": "polite" }) : null,
-    feed ? rejectedPanel(feed) : null);
+    feed ? rejectedPanel(feed) : null,
+  ].filter(Boolean));
   if (feed) renderList();
 }
 
