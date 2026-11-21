@@ -5,6 +5,14 @@ description: "Use when running the awai-arb cron arbitrage tick."
 
 # awai-arb tick
 
+> **Paused 2026-11-22 (AWAI-3207 owner decision).** The agent job that uses this skill
+> (`awai-arb-ossekai-report`) and the POST job (`awai-arb-propose-post`) are disabled.
+> Observation is private and local: `scripts/arb_measure.py` records price-difference
+> observation data (spot crypto and non-financial prices only; torihiki devnet is a
+> perpetual book and is no longer read) and `scripts/arb_summary.py` summarizes it.
+> Nothing is drafted as a proposal or sent anywhere. See
+> `docs/private-price-observation-20261122.md`. The steps below are kept for reference.
+
 1. Read last 24h of `~/.itonami/profiles/awai-arb/workspace/arb_ledger.jsonl` (1 tick = 1 JSON line). If the ledger is unreadable/empty AND the sandbox is degraded (see below), fall back to fresh live GET measurement via `web_extract` — never invent numbers; label evidence as live-measured with timestamp.
 2. Endpoints: torihiki-node `/head` `/book` (devnet, collateral unbacked — paper only), x402.nexus `/stats` `/api/catalog`, murakumo `/v1/models`, Coinbase spot BTC-USD/USDC-USD.
 3. Proposals: DRAFT them into `workspace/pending_proposals_<YYYY-MM-DD>.json` (`{"status":"PENDING_POST","proposals":[{id: "arb-<ts>-<slug>", kind: information|goods|procedural|social, evidence, proposal}]}`). Do not POST from the agent turn: the no-agent job `awai-arb-propose-post` (`scripts/arb_post.py`, every 30m) sends them to `https://ossekai.arb.etzhayyim.com/proposals` and confirms each by read-back (since 2026-09-24). Propose-only; no public posts, no @mentions (Council-gated).

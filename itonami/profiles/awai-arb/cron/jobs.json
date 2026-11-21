@@ -14,8 +14,8 @@
       "provider": null,
       "schedule": {
         "kind": "interval",
-        "minutes": 30,
-        "display": "every 30m"
+        "minutes": 1,
+        "display": "every 1m"
       },
       "script": "arb_measure.py",
       "skill": null,
@@ -26,7 +26,7 @@
       "base_url": "https://api.murakumo.cloud/v1",
       "context_from": null,
       "deliver": "local",
-      "enabled": true,
+      "enabled": false,
       "enabled_toolsets": null,
       "id": "887b2183be7c",
       "model": "mishima",
@@ -48,7 +48,7 @@
       "base_url": null,
       "context_from": null,
       "deliver": "local",
-      "enabled": true,
+      "enabled": false,
       "enabled_toolsets": null,
       "id": "e0cf6db3143f",
       "model": null,
