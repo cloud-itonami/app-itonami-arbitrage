@@ -1,2 +1,2 @@
-description: 'awai.network arbitrage measurement bot: torihiki/x402/murakumo price surfaces, cross-market gap vs external refs, paper PnL, propose-only'
+description: 'awai.network price-difference observation bot: spot crypto (Coinbase/Kraken) and non-financial prices (x402.nexus, murakumo), recorded on the host only; never trades'
 description_auto: false

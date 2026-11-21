@@ -401,7 +401,7 @@ Recorded so nobody reads the sections above as broader than they are.
   at DNS. The request shape the MCP router expects (`jsonrpc 2.0`,
   `tools/call`, `structuredContent` unwrapping) has never been confirmed
   against a live router from this repo.
-- **No signal produced.** The BPMN contracts and the Python
+- **No result produced.** The BPMN contracts and the Python
   `kotodama.ingest.arbitrage` module that compute proposals were not extracted
   into this repo and were not run.
 - **The NoExecution boundary was read, not tested.** It holds by absence of a

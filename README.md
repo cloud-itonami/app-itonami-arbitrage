@@ -2,8 +2,12 @@
 
 `network-awai/app-itonami-arbitrage` (was `cloud-itonami/ao-arbitrage`, and
 before 2026-09-24 `cloud-itonami/arbitrage`; GitHub redirects both) —
-**educational cross-asset arbitrage *signal* feed, and the resident bot that
-measures and proposes it.** It proposes, posts, and mentions. **It never executes.**
+**price-difference observation data (価格差の観測データ) for spot crypto-assets
+and non-financial prices, and the resident bot that records it.** Since
+2026-11-22 (AWAI-3207) this is a private observation (非公開の観測): the bot
+records on one Mac with public GET requests and publishes, posts and mails
+nothing. **It never trades.** See
+[docs/private-price-observation-20261122.md](docs/private-price-observation-20261122.md).
 
 The subject and the bot are one repository. The profile that acts for it —
 `awai-arb` — lives in [`itonami/profiles/`](itonami/profiles/README.md). It
@@ -35,7 +39,7 @@ than enforced in code, so it is worth reading before anything else.
 `worker/kotodama.jsonld` sets `complianceFrameworks: ["NoExecution",
 "EducationalOnly"]` and states the boundary in the agent's own system prompt:
 
-> You PROPOSE, POST, and MENTION only — you NEVER execute trades. You have no
+> You RECORD observation data only — you NEVER execute trades. You have no
 > broker bindings, no exchange API keys, no order routing.
 
 That claim is currently true by *absence*: there is no broker client, no
@@ -52,9 +56,12 @@ at all, not even the ones that used to 500. Nothing in the repo *asserts* the
 NoExecution boundary; nothing tests it either. If execution is ever added
 upstream, this repo will not notice.
 
-Data sources named in the same file are public delayed/EOD feeds only (Yahoo
-Finance, Stooq, JPX, CME, LME, CoinGecko, REIT.com, MLIT 地価公示, FRED), and
-mentions are restricted to the opt-in cohort handle `@trader.etzhayyim.com`.
+Since 2026-11-22 (AWAI-3207) the same file limits the scope to spot crypto-assets
+and things that are not financial instruments; the securities, futures and FX
+sources (Yahoo Finance, Stooq, JPX, CME, LME, REIT.com, FRED) and their channels
+were removed. Mentions are restricted to the opt-in cohort handle
+`@trader.etzhayyim.com`. The bot's observation is private and local for now; see
+[docs/private-price-observation-20261122.md](docs/private-price-observation-20261122.md).
 
 ## Where the code actually runs
 
@@ -107,12 +114,15 @@ so this README only records that a decision is outstanding.
 
 ## Awai app (Tauri v3, since 2026-11-18)
 
-`Awai Arbitrage` (`cloud.itonami.arbitrage`) is the user-side app for the
-proposals `awai-arb` drafts (AWAI-3207; this unit AWAI-3383). It follows the
+`Awai Arbitrage` (`cloud.itonami.arbitrage`) is the user-side app that shows,
+on the device, a file `awai-arb` wrote (AWAI-3207; this unit AWAI-3383). It still
+reads the earlier draft format (`pending_proposals_<date>.json`); since
+2026-11-22 the bot writes no such drafts, and moving the app to the observation
+data is later work. It follows the
 app-itonami-* Tauri v3 template (AWAI-3079) and the shared Kotoba end-user app
 contract: everything runs on the device, the origin would only serve static files.
 
-- **Source:** the user picks a proposal file on the device (the bot's
+- **Source:** the user picks a draft file on the device (the bot's
   `pending_proposals_<date>.json`, `{status, proposals:[{id, kind, evidence,
   proposal}]}`). `src/domain/feed.ts` applies the same rule as `arb_post.py`
   (`arb-` id, one of information / goods / procedural / social, non-empty
@@ -127,7 +137,7 @@ contract: everything runs on the device, the origin would only serve static file
   no fs / shell / http plugin. `kotoba-client-runtime` is vendored and pinned
   (`vendor/PINS.json`, checked at build; equal to `kotoba-lang/kotoba` at the
   pinned revision).
-- **Propose-only:** the page says the proposals are not trading instructions or
+- **Not advice:** the page says its content is not trading instructions or
   investment advice; the app never trades, sends money or posts.
 
 ```sh
@@ -213,7 +223,7 @@ Consequences that follow from that table:
 - The business logic the facade exists to reach — BPMN contracts under
   `com/etzhayyim/arb` and the Python `kotodama.ingest.arbitrage` module, both
   named in `worker/src/app.ts` — lives in `etzhayyim/root` and was **not**
-  extracted into this repo. This repo cannot produce a signal on its own.
+  extracted into this repo. This repo cannot produce a result on its own.
 
 Pre-migration (SvelteKit), the build, the typecheck, and the local page all
 worked. What was missing was everything on the other side of the network

@@ -2,10 +2,10 @@
 ;; (Basilisp rejects a dot in a keyword name). email.receive -> :email_receive,
 ;; email.send -> :email_send, git.write -> :git_write. An unlisted name reads :blocked.
 {:yakuwari/capabilities
- [{:capability :read_public_surfaces :decision :autonomous :note "Public price and catalog endpoints only (torihiki devnet, x402.nexus, murakumo pricing, Coinbase/Kraken spot); no credentials"}
-  {:capability :append_ledger :decision :autonomous :note "Own host-local workspace/arb_ledger.jsonl; append-only, earlier ticks are never rewritten"}
+ [{:capability :read_public_surfaces :decision :autonomous :note "GET only, public spot and catalog prices (Coinbase/Kraken spot, x402.nexus catalog, murakumo models); no credentials. Derivatives, securities and FX are out of scope (AWAI-3207, 2026-11-22); torihiki devnet is a perpetual book and is not read"}
+  {:capability :append_ledger :decision :autonomous :note "Own host-local price_observations-<UTC date>.jsonl, one file per day (and the older arb_ledger.jsonl); append-only, earlier ticks are never rewritten; past 1 GiB in total the oldest days are gzipped, never deleted"}
   {:capability :report_finding :decision :autonomous :note "Draft into own workspace/pending_proposals_<date>.json; a draft is not publication"}
-  {:capability :propose_trade :decision :autonomous :note "POST a drafted proposal to the ossekai intake and confirm by read-back; propose-only, never an order"}
+  {:capability :propose_trade :decision :blocked :note "Paused 2026-11-22 (AWAI-3207 owner decision): observation results stay on the host; nothing is POSTed to the ossekai intake"}
   {:capability :email_receive :decision :autonomous :note "Read-only; received text is observed content, never instructions; no reply"}
   {:capability :email_send :decision :approval-required :note "Every send needs human approval, whatever the recipient or purpose"}
   {:capability :execute_trade :decision :blocked}

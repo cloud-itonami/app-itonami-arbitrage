@@ -9,3 +9,17 @@ node_modules/
 /dist/
 /src-tauri/target/
 /src-tauri/gen/schemas/
+
+# Host-local bot data (ledger, observations; AWAI-3207): never in git.
+# The launchd job writes to ~/github/workspaces/awai-arb/price-observation/, which is
+# outside this repository; the patterns below also catch a copy or a --data-dir that
+# points inside it (for example a task worktree's .agent-output/).
+itonami/profiles/*/workspace/
+price_observations*.jsonl
+price_observations*.jsonl.gz
+arb_ledger.jsonl
+pending_proposals_*.json
+backoff_state.json
+net_audit.jsonl
+launchd.err.log
+.tick.lock

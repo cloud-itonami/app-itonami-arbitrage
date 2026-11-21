@@ -7,17 +7,17 @@
   "runtimeType": "worker",
   "performerType": "service",
   "uiType": "yoro",
-  "convoSystemPrompt": "You are the arb.etzhayyim.com agent. You scan public delayed/EOD market data (Yahoo Finance, Stooq, JPX, CME, LME, CoinGecko, REIT.com, MLIT 地価公示, FRED) for cross-venue / cross-asset arbitrage opportunities across equities, real estate, futures, commodities, FX, and crypto. You PROPOSE, POST, and MENTION only — you NEVER execute trades. You have no broker bindings, no exchange API keys, no order routing. Every published proposal carries the disclaimer 'Educational signal. Not advice. No execution.' Mentions are restricted to opt-in cohort handle @trader.etzhayyim.com.",
+  "convoSystemPrompt": "You are the arb.etzhayyim.com agent. You record public price-difference observation data for spot crypto-assets across venues and for things that are not financial instruments (compute, goods, procedures). Derivatives (futures, perpetuals, options), securities and FX are out of scope (AWAI-3207, 2026-11-22). You RECORD observation data only — you NEVER execute trades. You have no broker bindings, no exchange API keys, no order routing. While the observation is private (AWAI-3207) nothing is published, posted or mentioned. Any later display says: 価格差の観測データ。投資助言ではありません。手数料・送金時間・スリッページを含みません。",
   "duties": ["勤労の義務"],
-  "kpi": ["Active proposals / day", "Top-N edge_bps median", "Proposal precision (post-hoc)"],
+  "kpi": ["Observations / day", "Price differences at or above threshold / day", "Fresh source answers / total"],
   "governance": {
     "classification": "public",
     "complianceFrameworks": ["NoExecution", "EducationalOnly"],
     "raci": "responsible"
   },
   "profile": {
-    "displayName": "Arb — Cross-Asset Arbitrage Signals",
-    "description": "Thin Cloudflare Worker edge facade for educational arbitrage BPMN-contract/LangServer workflows. PROPOSE-only — never executes.",
+    "displayName": "Arb — Price-Difference Observation Data",
+    "description": "Thin Cloudflare Worker edge facade for price-difference observation workflows. Records observation data only — never executes.",
     "isBot": true,
     "agentType": "autonomous",
     "category": "research",
@@ -26,16 +26,11 @@
   },
   "space": {
     "name": "Arb",
-    "description": "Educational arbitrage signals — propose, post, mention. Never execute.",
+    "description": "Price-difference observation data. Never trades.",
     "joinRule": "public",
     "historyVisibility": "world-readable",
     "channels": [
-      { "name": "arb-feed",     "kind": "public", "default": true, "description": "Top-N arbitrage proposals (15-min digest)" },
-      { "name": "arb-eq",       "kind": "public", "description": "Equities — dual-listed / ADR-local pairs" },
-      { "name": "arb-fut",      "kind": "public", "description": "Futures — calendar / basis / contango" },
-      { "name": "arb-fx",       "kind": "public", "description": "FX triangular" },
-      { "name": "arb-com",      "kind": "public", "description": "Commodities — cross-exchange / physical-paper" },
-      { "name": "arb-re",       "kind": "public", "description": "Real estate — REIT vs NAV" },
+      { "name": "arb-feed",     "kind": "public", "default": true, "description": "Price-difference observation data (not published while the observation is private)" },
       { "name": "arb-cr",       "kind": "public", "description": "Crypto — cross-venue" }
     ]
   },
