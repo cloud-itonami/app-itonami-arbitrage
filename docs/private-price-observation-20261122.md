@@ -67,8 +67,8 @@ JSONL は 1 日 1 ファイルにし、合計が 1 GB を超えたら古いも�
 | | |
 |---|---|
 | plist | `~/Library/LaunchAgents/network.awai.arb-observe.plist`（label `network.awai.arb-observe`） |
-| 実行 | `/opt/homebrew/bin/python3 -I <worktree>/itonami/profiles/awai-arb/scripts/arb_measure.py --data-dir <dir> --interval-s 60`、`StartInterval 60`、`RunAtLoad` |
-| script の場所 | 今は task worktree `~/github/wt/claude/awai-3207-private-observe`（branch `claude/awai-3207-private-observe`）。merge したら main の checkout に向け直し、そのあとでこの worktree を片づける |
+| 実行 | `/opt/homebrew/bin/python3 -I ~/github/network-awai/app-itonami-arbitrage/itonami/profiles/awai-arb/scripts/arb_measure.py --data-dir <dir> --interval-s 60`、`StartInterval 60`、`RunAtLoad` |
+| script の場所 | main の checkout `~/github/network-awai/app-itonami-arbitrage`（branch `main`） |
 | 記録の dir | `~/github/workspaces/awai-arb/price-observation/` |
 | 記録 | `price_observations-YYYY-MM-DD.jsonl`（日付は UTC）、古い日の `.jsonl.gz`、`backoff_state.json`（取引所ごとの延長）、`launchd.err.log`（stderr だけ。stdout は `/dev/null`。中身は JSONL にある） |
 
@@ -89,7 +89,7 @@ JSONL は 1 日 1 ファイルにし、合計が 1 GB を超えたら古いも�
 
 ```sh
 launchctl print gui/$(id -u)/network.awai.arb-observe | grep -E 'state|runs|last exit'
-python3 -I ~/github/wt/claude/awai-3207-private-observe/itonami/profiles/awai-arb/scripts/arb_summary.py \
+python3 -I ~/github/network-awai/app-itonami-arbitrage/itonami/profiles/awai-arb/scripts/arb_summary.py \
   --data-dir ~/github/workspaces/awai-arb/price-observation
 launchctl bootout gui/$(id -u)/network.awai.arb-observe      # 止める（unload）
 launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/network.awai.arb-observe.plist   # 再開
